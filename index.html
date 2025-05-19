@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JTex - Transporte Inteligente en ITSU</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #000000;  /* Negro */
+            --secondary: #FFFFFF; /* Blanco */
+            --accent: #F5F5F5;    /* Gris claro */
+            --dark: #333333;      /* Gris oscuro */
+            --light: #FFFFFF;     /* Blanco */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        header {
+            background-color: var(--secondary);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+        
+        .logo h1 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('Gif.gif');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--secondary);
+            padding: 0 1rem;
+        }
+        
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInDown 1s ease;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+        
+        .cta-button {
+            background-color: var(--secondary);
+            color: var(--primary);
+            border: 2px solid var(--secondary);
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            animation: pulse 2s infinite 1s;
+            text-decoration: none;
+        }
+        
+        .cta-button:hover {
+            background-color: transparent;
+            color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        
+        .features {
+            padding: 5rem 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: var(--accent);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: var(--secondary);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            opacity: 0;
+            transform: translateY(20px);
+            border: 1px solid #eee;
+        }
+        
+        .feature-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .feature-card p {
+            color: #666;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .about {
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 5rem 1rem;
+            text-align: center;
+            border-top: 1px solid var(--accent);
+            border-bottom: 1px solid var(--accent);
+        }
+        
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+        
+        .about-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .about h2 {
+            margin-bottom: 2rem;
+            color: var(--primary);
+        }
+        
+        .about p {
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .how-it-works {
+            padding: 5rem 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: var(--accent);
+        }
+        
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 250px;
+            max-width: 300px;
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--secondary);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            border: 1px solid #eee;
+        }
+        
+        .step.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            color: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+        
+        .step h3 {
+            margin: 1rem 0;
+            color: var(--primary);
+        }
+        
+        .register {
+            padding: 5rem 1rem; 
+            text-align: center; 
+            background-color: var(--primary);
+            color: var(--secondary);
+        }
+        
+        .register .cta-button {
+            background-color: var(--secondary);
+            color: var(--primary);
+            border: 2px solid var(--secondary);
+        }
+        
+        .register .cta-button:hover {
+            background-color: transparent;
+            color: var(--secondary);
+        }
+        
+        footer {
+            background-color: var(--primary);
+            color: var(--secondary);
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .steps {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .step {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="logo.jpg" alt="JTex Logo">
+                <h1>JTex</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#features">Beneficios</a></li>
+                <li><a href="#about">Nosotros</a></li>
+                <li><a href="#how-it-works">Cómo funciona</a></li>
+                <li><a href="#register" class="cta-button">Registrarse</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="hero">
+        <h2>Movilidad inteligente en el ITSU</h2>
+        <p>Transporte rápido, ecológico y conveniente dentro del campus universitario con nuestros scooters eléctricos</p>
+        <a href="#register" class="cta-button">Empieza ahora!</a>
+    </section>
+    
+    <section class="features" id="features">
+        <h2 class="section-title">¿Por qué elegir JTex?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>Rapidez</h3>
+                <p>Llega a cualquier punto del campus en minutos, evitando largas caminatas entre clases.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌱</div>
+                <h3>Ecológico</h3>
+                <p>Cero emisiones contaminantes. Contribuye a un campus más verde y sostenible.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💳</div>
+                <h3>Fácil de usar</h3>
+                <p>Solo pasa tu tarjeta RFID y listo. Sin complicaciones, sin esperas.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3>Económico</h3>
+                <p>Precios accesibles para estudiantes. Menor costo que otras alternativas de transporte.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Seguro</h3>
+                <p>Scooters con mantenimiento constante y sistemas de seguridad integrados.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Tecnológico</h3>
+                <p>Sistema inteligente de monitoreo y registro de viajes mediante RFID.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="about" id="about">
+        <div class="about-content">
+            <h2 class="section-title">Sobre JTex</h2>
+            <p>JTex es una empresa innovadora creada por estudiantes del Instituto Tecnológico Superior de Uruapan, con el objetivo de mejorar la movilidad dentro del extenso campus universitario.</p>
+            <p>Nuestra misión es proporcionar un transporte rápido, seguro y ecológico que facilite la vida académica de los estudiantes, reduciendo tiempos de traslado entre clases y contribuyendo al medio ambiente.</p>
+            <p>Con tecnología RFID de última generación, hemos desarrollado un sistema sencillo pero efectivo para que puedas desplazarte por el ITSU de la manera más eficiente posible.</p>
+        </div>
+    </section>
+    
+    <section class="how-it-works" id="how-it-works">
+        <h2 class="section-title">Cómo funciona</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Regístrate</h3>
+                <p>Completa el formulario de registro y obtén tu tarjeta RFID personalizada.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Acércate a un scooter</h3>
+                <p>Localiza uno de nuestros scooters disponibles en los puntos designados del campus.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Pasa tu tarjeta</h3>
+                <p>Acerca tu tarjeta RFID al sensor del scooter para desbloquearlo.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Disfruta el viaje</h3>
+                <p>Conduce hasta tu destino dentro del campus y estaciona en las áreas designadas.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="register" id="register">
+        <h2 class="section">¿Listo para unirte?</h2>
+        <p style="max-width: 600px; margin: 0 auto 2rem;">Regístrate ahora y obtén acceso inmediato a nuestra flota de scooters eléctricos en el ITSU.</p>
+        <a href="registro.php" class="cta-button">Registrarse ahora</a>
+    </section>
+    
+    <footer>
+        <p>© 2023 JTex - Transporte Inteligente ITSU. Todos los derechos reservados.</p>
+        <p>Instituto Tecnológico Superior de Uruapan</p>
+    </footer>
+    
+    <script>
+        // Animación para las tarjetas al hacer scroll
+        const featureCards = document.querySelectorAll('.feature-card');
+        const aboutContent = document.querySelector('.about-content');
+        const steps = document.querySelectorAll('.step');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {threshold: 0.1});
+        
+        featureCards.forEach(card => {
+            observer.observe(card);
+        });
+        
+        if (aboutContent) {
+            observer.observe(aboutContent);
+        }
+        
+        steps.forEach(step => {
+            observer.observe(step);
+        });
+        
+        // Smooth scrolling para los enlaces del menú
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                if(this.getAttribute('href') === '#register') {
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                } else {
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
